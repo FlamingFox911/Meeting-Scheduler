@@ -6,30 +6,27 @@ import android.support.annotation.NonNull;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-
-/**
- * Created by flami on 2016-11-27.
- * Stuff
- */
 
 public class Meeting implements Comparable<Meeting>, Serializable {
     private static final long serialVersionUID = 65465454753654L;
 
-    private String title, description;
+    private String title, description, location;
     private Date date;
     SimpleDateFormat f;
 
     public Meeting(){
-        this(null, null, null);
+        this(null, null, "1970,01,01,00,00", null);
     }
 
     @SuppressLint("SimpleDateFormat")
-    public Meeting(String t, String i, String d){
+    public Meeting(String t, String i, String d, String l){
         this.f = new SimpleDateFormat("yyyy,MM,dd,HH,mm");
         this.setTitle(t);
         this.setDescription(i);
         this.setDate(d);
+        this.setLocation(l);
     }
 
     public void setDate(int year, int month, int day, int hour, int minute){
@@ -45,6 +42,26 @@ public class Meeting implements Comparable<Meeting>, Serializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setDate(long l){
+        date.setTime(l);
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    public boolean isThisDay(Date day){
+        Calendar from = Calendar.getInstance();
+        Calendar to = Calendar.getInstance();
+        from.setTime(date);
+        to.setTime(day);
+
+        return from.get(Calendar.YEAR) == to.get(Calendar.YEAR) && from.get(Calendar.MONTH) == to.get(Calendar.MONTH) && from.get(Calendar.DAY_OF_MONTH) == to.get(Calendar.DAY_OF_MONTH);
+    }
+    public void incTime(int i){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, i);
+        date = c.getTime();
     }
 
     public long getTime(){
@@ -69,6 +86,14 @@ public class Meeting implements Comparable<Meeting>, Serializable {
 
     public void setDescription(String in){
         description = in;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String in) {
+        this.location = in;
     }
 
     public int[] toIntArray(){
@@ -98,4 +123,6 @@ public class Meeting implements Comparable<Meeting>, Serializable {
             return 0;
         }
     }
+
+
 }

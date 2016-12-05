@@ -28,11 +28,32 @@
         android:fadeScrollbars="false"
         android:layout_weight="0.95" />
 
-    <Button
-        android:text="@string/poll"
+    <LinearLayout
+        android:orientation="horizontal"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/poll"
-        android:onClick="poll"
-        android:layout_weight="0.005" />
+        android:layout_weight="0.045">
+
+        <Button
+            android:text="@string/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/clear"
+            android:onClick="clear"
+            style="?android:attr/buttonBarButtonStyle"
+            android:textColor="@color/colorForegroundText"
+            android:layout_weight="0.5"/>
+
+        <View style="@style/Vertical"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/filter"
+            android:onClick="filter"
+            style="?android:attr/buttonBarButtonStyle"
+            android:textColor="@color/colorForegroundText"
+            android:layout_weight="0.5"/>
+    </LinearLayout>
 </LinearLayout>

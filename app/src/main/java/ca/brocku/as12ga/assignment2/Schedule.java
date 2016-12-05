@@ -4,11 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-/**
- * Created by flami on 2016-11-27.
- * STUFF
- */
-
 public class Schedule extends Meeting implements Serializable {
     private static final long serialVersionUID = 65465454753654L;
 
@@ -17,8 +12,8 @@ public class Schedule extends Meeting implements Serializable {
 
     public Schedule(){
         super();
-        this.schedule = new PriorityQueue<Meeting>();
-        this.list = new ArrayList<Meeting>();
+        this.schedule = new PriorityQueue<>();
+        this.list = new ArrayList<>();
     }
 
     public int getLength(){
@@ -31,8 +26,24 @@ public class Schedule extends Meeting implements Serializable {
     }
 
     public Meeting remove(){
-        Meeting result = this.schedule.remove();
-        this.makeList();
+        return this.remove(0);
+    }
+
+    public int contains(Meeting to){
+        for (int i = 0; i < schedule.size(); i++){
+            Meeting m = getMeeting(i);
+            if (m.equals(to)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public Meeting remove(int i){
+        Meeting result = list.remove(i);
+        PriorityQueue<Meeting> newSchedule = new PriorityQueue<>();
+        newSchedule.addAll(list);
+        schedule = newSchedule;
         return result;
     }
 
@@ -41,7 +52,7 @@ public class Schedule extends Meeting implements Serializable {
     }
 
     private void makeList(){
-        list = new ArrayList<Meeting>();
+        list = new ArrayList<>();
         for (Meeting m : schedule){
             list.add(m);
         }
