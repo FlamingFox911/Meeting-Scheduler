@@ -45,6 +45,23 @@ public class MyScheduleActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onSaveInstanceState (Bundle b){
+        b.putSerializable("Schedule", mSchedule);
+        b.putSerializable("Current View", currentView);
+        b.putInt("Filtering", filtering);
+        super.onSaveInstanceState(b);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle b){
+        super.onRestoreInstanceState(b);
+        mSchedule = (Schedule) b.getSerializable("Schedule");
+        currentView = (Schedule) b.getSerializable("Current View");
+        filtering = b.getInt("Filtering");
+        display(filtering);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_menu, menu); //your file name

@@ -29,6 +29,10 @@ public class MeetingDetail extends AppCompatActivity {
         location = (TextView) findViewById(R.id.locationMeeting);
         delete = (Button) findViewById(R.id.delete);
 
+        display();
+    }
+
+    public void display(){
         mMeeting = mSchedule.getMeeting(id);
         title.setText(mMeeting.getTitle());
         description.setText(mMeeting.getDescription());
@@ -47,5 +51,26 @@ public class MeetingDetail extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState (Bundle b){
+        b.putSerializable("Schedule", mSchedule);
+        b.putString("Title", title.getText().toString());
+        b.putString("Description", description.getText().toString());
+        b.putString("Location", location.getText().toString());
+        b.putInt("ID", id);
+        super.onSaveInstanceState(b);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle b){
+        super.onRestoreInstanceState(b);
+        mSchedule = (Schedule) b.getSerializable("Schedule");
+        title.setText(b.getString("Title"));
+        description.setText(b.getString("Description"));
+        location.setText(b.getString("Location"));
+        id = b.getInt("ID");
+        display();
     }
 }

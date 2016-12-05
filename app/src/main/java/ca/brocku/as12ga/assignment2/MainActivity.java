@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         b.putString("Title", mTitle.getText().toString());
         b.putString("Description", mDescription.getText().toString());
         b.putString("Location", mLocation.getText().toString());
+        b.putInt("Total", total);
         super.onSaveInstanceState(b);
     }
 
@@ -56,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
     public void onRestoreInstanceState(Bundle b){
         super.onRestoreInstanceState(b);
         mSchedule = (Schedule) b.getSerializable("Schedule");
+        mTitle.setText(b.getString("Title"));
+        mDescription.setText(b.getString("Description"));
+        mLocation.setText(b.getString("Location"));
+        total = b.getInt("total");
     }
 
     @Override
@@ -95,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void proceed(View view){
+        saveData(mSchedule);
         Intent intent = new Intent(this.getApplicationContext(), MyScheduleActivity.class);
         intent.putExtra("Schedule", mSchedule);
         startActivityForResult(intent, 1);
@@ -117,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         m.setDate(mDate.getYear(), mDate.getMonth() + 1, mDate.getDayOfMonth(), mTime.getHour(), mTime.getMinute());
         m.setLocation(mLocation.getText().toString());
         mSchedule.add(m);
+        saveData(mSchedule);
 
         Toast.makeText(this, "Created Meeting.", Toast.LENGTH_SHORT).show();
         mTitle.setText("");
